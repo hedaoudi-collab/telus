@@ -1,0 +1,40 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Collaborateur {
+  createdAt         DateTime       @default(now())
+  dateDepart        DateTime?
+  dateEmbauche      DateTime?
+  dateEntreePoste   DateTime?
+  departement       String?
+  entreeSorties     EntreeSortie[]
+  equipeNPlusUn     String?
+  id                String         @id @default(cuid())
+  mailProfessionnel String?
+  matriculePaie     String?
+  nom               String?
+  numeroTel         String?
+  poste             String?
+  prenom            String?
+  service           String?
+  siteProduction    String?
+  teletravail       Boolean?
+  updatedAt         DateTime       @updatedAt
+  wdId              String?
+}
+
+model EntreeSortie {
+  badgeTemporaire String?
+  collaborateur   Collaborateur? @relation(fields: [collaborateurId], references: [id])
+  collaborateurId String?
+  createdAt       DateTime       @default(now())
+  dateHeureEntree DateTime?
+  id              String         @id @default(cuid())
+  updatedAt       DateTime       @updatedAt
+}
